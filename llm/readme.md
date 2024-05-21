@@ -1,0 +1,8 @@
+# LLMs: start the journey
+
+## Summarize lessons:
+### Julien Simon's Lightning Lesson 
+- Recording: [https://maven.com/p/cd9523](https://email-courses.maven.com/e/c/eyJlbWFpbF9pZCI6IlJNLXdCd1VBQVktYjJWWGlxLXJWekhfRGpkRHUzZz09IiwiaHJlZiI6Imh0dHBzOi8vbWF2ZW4uY29tL3AvY2Q5NTIzIiwiaW50ZXJuYWwiOiJjZmIwMDcwYTgyYmUwMWUzZTUxMyJ9/5b6044479ee24a0b0a3d777ba7c5f829fd6bbc79ed6d07dd264ed3134626b1b1)
+- Online course (free!): [https://huggingface.co/learn](https://email-courses.maven.com/e/c/eyJlbWFpbF9pZCI6IlJNLXdCd1VBQVktYjJWWGlxLXJWekhfRGpkRHUzZz09IiwiaHJlZiI6Imh0dHBzOi8vaHVnZ2luZ2ZhY2UuY28vbGVhcm4iLCJpbnRlcm5hbCI6ImNmYjAwNzBhODJiZTAxZTNlNTEzIn0/adf64b18313831f975ffecbefffc624100a2ee64d672aff06c3d30c4ea5ceca7)
+- Hugging Face blog: [https://huggingface.co/blog](https://email-courses.maven.com/e/c/eyJlbWFpbF9pZCI6IlJNLXdCd1VBQVktYjJWWGlxLXJWekhfRGpkRHUzZz09IiwiaHJlZiI6Imh0dHBzOi8vaHVnZ2luZ2ZhY2UuY28vYmxvZyIsImludGVybmFsIjoiY2ZiMDA3MGE4MmJlMDFlM2U1MTMifQ/4aa1a6360561db1ccd6cd2ee465fe7899b6d2becc7d8c397a69b8793c5f65003)
+- Julien's YouTube channel: [https://www.youtube.com/juliensimonfr](https://email-courses.maven.com/e/c/eyJlbWFpbF9pZCI6IlJNLXdCd1VBQVktYjJWWGlxLXJWekhfRGpkRHUzZz09IiwiaHJlZiI6Imh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL2p1bGllbnNpbW9uZnIiLCJpbnRlcm5hbCI6ImNmYjAwNzBhODJiZTAxZTNlNTEzIn0/6ad02c94968f87e9c83bf9fe634fec65d44af234ebe872610a14ce5e280f29b8)
