@@ -11,7 +11,22 @@ Building a search tree is like asking "what if" questions to identify possible a
 
 **Transportation** - A street with blocks numbered 1 to $n$. Walking from $s$ to $s+1$ takes 1 minute. Taking a magic tram from $s$ to $2s$ takes 2 minutes. How to travel from 1 to $n$ in the least time?
 
-```{python}
-def hola(a,b):
-  return a + b
+```python
+class TransportationProblem(object):
+  def __init__(self, N):
+    self.N = N   # N = number of blocks
+
+  def startState(self):
+    return 1
+
+  def isEnd(self, state):
+    return state == self.N
+
+  def succAndCost(self, state):
+    # return list of (action, newState, cost) triples
+    result = []
+    if state + 1 <= self.N:
+      result.append(('walk', state+1, 1))
+    if state*2 <= self.N:
+      result.append(('tram',state*2, 2))
 ```
