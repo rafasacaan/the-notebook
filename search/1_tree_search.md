@@ -1,5 +1,5 @@
 # Tree search
-taken from Stanford, CS221.
+taken from Stanford, CS221, 2019.
 
 ## Example 1
 Let´s take the Farmer, Cabbage, Goat, Wolf problem.
