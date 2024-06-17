@@ -49,7 +49,7 @@ Now, let´s talk about algorithms to solve this problem.
 
 | Algorithm  | Description | Cost | Time | Space |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
-| Backtracking search  | Searches a tree which goes through each branch, and allows **any** cost assigned at each branch | Any | $O(branching^actions)$ | $O(actions)$ |
+| Backtracking search  | Searches a tree which goes through each branch, and allows **any** cost assigned at each branch | Any | $O({branching}^{actions})$ | $O(actions)$ |
 
 
 ### 2.1 Backtracking search
@@ -79,6 +79,19 @@ def backtrackingSearch(problem):
   # run
   recurse(problem.startState(), history=[], totalCost=0)
   return (best['cost'], best['history'])
+```
+And let´s try it out
+```python
+prob = TransportationProblem(N=20)
+print(printSolution(backtrackingSearch(prob)))
+#totalCost: 8
+#('walk', 2, 1)
+#('walk', 3, 1)
+#('walk', 4, 1)
+#('walk', 5, 1)
+#('tram', 10, 2)
+#('tram', 20, 2)
+#None
 ```
 
 
