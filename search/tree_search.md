@@ -40,6 +40,6 @@ class TransportationProblem(object):
 Now, let´s talk about algorithms to solve this problem.
 
 | Algorithm  | Description | Cost | Time | Space |
-| :------------- | :------------- |
+| :------------- | :------------- | :------------- | :------------- | :------------- |
 | Backtracking search  | Searches a tree which goes through each branch, and allows **any** cost assigned at each branch | $O(branches^depth) | $O(depth)$ |
 
