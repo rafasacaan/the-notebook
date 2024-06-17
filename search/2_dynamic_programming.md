@@ -6,4 +6,4 @@ The objective is to find the future cost of state $s$.
 
 So, we need to calculate:
 
-$FutureCost(s) = min_{a}{cost(s,a) + FutureCost(s')}$
+$FutureCost(s) = min_{{cost(s,a) + FutureCost(s')}}$
