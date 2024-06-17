@@ -1,4 +1,5 @@
 # Tree search
+taken from Stanford, CS221.
 
 ## Example 1
 Let´s take the Farmer, Cabbage, Goat, Wolf problem.
@@ -10,6 +11,10 @@ Building a search tree is like asking "what if" questions to identify possible a
 ## Example 2
 
 **Transportation** - A street with blocks numbered 1 to $n$. Walking from $s$ to $s+1$ takes 1 minute. Taking a magic tram from $s$ to $2s$ takes 2 minutes. How to travel from 1 to $n$ in the least time?
+
+Imagine each path as a tree:
+<img width="703" alt="image" src="https://github.com/rafasacaan/the-notebook/assets/10575866/79ba4225-1272-4a55-9cd8-c7ce12d05d75">
+
 
 Let´s define the problem.
 
@@ -50,7 +55,8 @@ Now, let´s talk about algorithms to solve this problem.
 | Algorithm  | Description | Cost | Time | Space |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
 | Backtracking search  | Searches a tree which goes through each branch, and allows **any** cost assigned at each branch | Any | $O({branching}^{depth})$ | $O(depth)$ |
-| Depth-first search (DFS)  | Finds a solution and does not need to find more solutions if you already reached a good one | 0 | $O({branching}^{depth})$ | $O(depth)$ |
+| Depth-first search (DFS)  | Finds a solution and does not need to find more solutions if you already reached a good one | $c=0$ | $O({branching}^{depth})$ | $O(depth)$ |
+| Breadth-first search (BFS)  | Assume equal costs per actions and explores tree per horizontal layers until a solution is found. If we continue searching, we will only add more $c$ to the final solution (i.e. worse) | $c>=0$ | $O({branching}^{small_depth})$ | $O(small_depth)$ |
 
 
 ### 2.1 Backtracking search
@@ -100,6 +106,8 @@ Same as backtracking, but once its find a solution, then it is done (does not ex
 
 > Assume action costs $Cost(s,a) = 0$
 
+### 2.3. Breadth-first search (BFS)
+Now, search the tree thorugh its horizontal layers, from top to bottom. Assume all actions have the same cost $c$. Once we find a solution, there is no need to keep searching as we will only get solutions that taje more $c$ to arrive. One problem is that you need memory: as we go into the first node from left to right, i need to store all of its history, as I dont know if the un-explored solutions to the right will provide an end state.
 
 
 
