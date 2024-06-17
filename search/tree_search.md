@@ -49,7 +49,8 @@ Now, let´s talk about algorithms to solve this problem.
 
 | Algorithm  | Description | Cost | Time | Space |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
-| Backtracking search  | Searches a tree which goes through each branch, and allows **any** cost assigned at each branch | Any | $O({branching}^{actions})$ | $O(actions)$ |
+| Backtracking search  | Searches a tree which goes through each branch, and allows **any** cost assigned at each branch | Any | $O({branching}^{depth})$ | $O(depth)$ |
+| Depth-first search (DFS)  | Finds a solution and does not need to find more solutions if you already reached a good one | 0 | $O({branching}^{depth})$ | $O(depth)$ |
 
 
 ### 2.1 Backtracking search
@@ -94,4 +95,12 @@ print(printSolution(backtrackingSearch(prob)))
 #None
 ```
 
+### 2.2. First improvement: depth-first search (DFS)
+Same as backtracking, but once its find a solution, then it is done (does not explore anymore). We can translate this to adding an constraint to the search, equivalent as making the branch costs equal to zero.
 
+> Assume action costs $Cost(s,a) = 0$
+
+
+
+
+ 
