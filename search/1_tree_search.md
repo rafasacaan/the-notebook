@@ -54,10 +54,10 @@ Now, let´s talk about algorithms to solve this problem.
 
 | Algorithm  | Description | Cost | Time | Space |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
-| Backtracking search  | Searches a tree which goes through each branch, and allows **any** cost assigned at each branch | Any | $O({branching}^{depth})$ | $O(depth)$ |
-| Depth-first search (DFS)  | Finds a solution and does not need to find more solutions if you already reached a good one | $c=0$ | $O({branching}^{depth})$ | $O(depth)$ |
-| Breadth-first search (BFS)  | Assume equal costs per actions and explores tree per horizontal layers until a solution is found. If we continue searching, we will only add more $c$ to the final solution (i.e. worse) | $c>=0$ | $O({branching}^{small_depth})$ | $O(small_depth)$ |
-| DFS - ID (iterative deepening)  | Run DFS for different levels of depth | $c>=0$ | $O({branching}^{small_depth})$ | $O(small_depth)$ |
+| Backtracking search  | Searches a tree which goes through each branch, and allows **any** cost assigned at each branch | Any | $O({b}^{D})$ | $O(D)$ |
+| Depth-first search (DFS)  | Finds a solution and does not need to find more solutions if you already reached a good one | $c=0$ | $O({branching}^{D})$ | $O(D)$ |
+| Breadth-first search (BFS)  | Assume equal costs per actions and explores tree per horizontal layers until a solution is found. If we continue searching, we will only add more $c$ to the final solution (i.e. worse) | $c>=0$ | $O({branching}^{d})$ | $O(d)$ |
+| DFS - ID (iterative deepening)  | Run DFS for different levels of depth | $c>=0$ | $O({branching}^{d})$ | $O(d)$ |
 
 
 ### 2.1 Backtracking search
