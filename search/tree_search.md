@@ -37,9 +37,48 @@ class TransportationProblem(object):
     return result
 ```
 
+```python
+def printSolution(solution):
+  totalCost, history = solution
+  print('totalCost: {}'.format(totalCost))
+  for item in history:
+    print(item)
+```
+
 Now, let´s talk about algorithms to solve this problem.
 
 | Algorithm  | Description | Cost | Time | Space |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
-| Backtracking search  | Searches a tree which goes through each branch, and allows **any** cost assigned at each branch | $O(branches^depth) | $O(depth)$ |
+| Backtracking search  | Searches a tree which goes through each branch, and allows **any** cost assigned at each branch | Any | $O(branching^actions) | $O(actions)$ |
+
+
+### 2.1 Backtracking search
+
+```python
+def backtrackingSearch(problem):
+  # best solution found
+  best = {
+    'cost': float('+inf'),
+    'history': None
+  }
+
+  # recursive function that explores a branch of the tree
+  # and its child branches
+  def recurse(state, history, totalCost):
+    # update
+    if problem.isEnd(state):
+      if totalCost < best['cost']:
+        best['cost'] = totalCost
+        best['history'] = history
+      return
+    
+    # explore
+    for action, newState, cost in problem.succAndCost(state):
+      recurse(newState, history + [(action, newState, cost)], totalCost + cost)
+  
+  # run
+  recurse(problem.startState(), history=[], totalCost=0)
+  return (best['cost'], best['history'])
+```
+
 
