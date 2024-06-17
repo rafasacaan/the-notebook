@@ -114,4 +114,8 @@ Now, search the tree thorugh its horizontal layers, from top to bottom. Assume a
 Modify DFS to stop at a maximum depth. Call DFS for maximum depths: 1,2,... . On depth $d$ ask if there is a solution of $d$ actions (such as what BFS looks for). If it is the case, stop. Else, keep searching for larger depths.
 
 
+## Conclusions
+- Always exponential time
+- Avoid exponential space with DFS-ID
+
  
