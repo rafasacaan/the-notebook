@@ -57,6 +57,7 @@ Now, let´s talk about algorithms to solve this problem.
 | Backtracking search  | Searches a tree which goes through each branch, and allows **any** cost assigned at each branch | Any | $O({branching}^{depth})$ | $O(depth)$ |
 | Depth-first search (DFS)  | Finds a solution and does not need to find more solutions if you already reached a good one | $c=0$ | $O({branching}^{depth})$ | $O(depth)$ |
 | Breadth-first search (BFS)  | Assume equal costs per actions and explores tree per horizontal layers until a solution is found. If we continue searching, we will only add more $c$ to the final solution (i.e. worse) | $c>=0$ | $O({branching}^{small_depth})$ | $O(small_depth)$ |
+| DFS - ID (iterative deepening)  | Run DFS for different levels of depth | $c>=0$ | $O({branching}^{small_depth})$ | $O(small_depth)$ |
 
 
 ### 2.1 Backtracking search
@@ -109,6 +110,8 @@ Same as backtracking, but once its find a solution, then it is done (does not ex
 ### 2.3. Breadth-first search (BFS)
 Now, search the tree thorugh its horizontal layers, from top to bottom. Assume all actions have the same cost $c$. Once we find a solution, there is no need to keep searching as we will only get solutions that taje more $c$ to arrive. One problem is that you need memory: as we go into the first node from left to right, i need to store all of its history, as I dont know if the un-explored solutions to the right will provide an end state.
 
+### 2.4. DFS-ID
+Modify DFS to stop at a maximum depth. Call DFS for maximum depths: 1,2,... . On depth $d$ ask if there is a solution of $d$ actions (such as what BFS looks for). If it is the case, stop. Else, keep searching for larger depths.
 
 
  
