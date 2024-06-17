@@ -10,3 +10,8 @@ Building a search tree is like asking "what if" questions to identify possible a
 ## Example 2
 
 **Transportation** - A street with blocks numbered 1 to $n$. Walking from $s$ to $s+1$ takes 1 minute. Taking a magic tram from $s$ to $2s$ takes 2 minutes. How to travel from 1 to $n$ in the least time?
+
+```{python}
+def hola(a,b):
+  return a + b
+```
