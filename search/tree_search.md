@@ -25,7 +25,7 @@ class TransportationProblem(object):
     return state == self.N
 
   def succAndCost(self, state):
-    # return list of (action, newState, cost) triples
+    # return list of possible (action, newState, cost) triples
     result = []
 
     if state + 1 <= self.N:
@@ -38,3 +38,8 @@ class TransportationProblem(object):
 ```
 
 Now, let´s talk about algorithms to solve this problem.
+
+| Algorithm  | Description | Cost | Time | Space |
+| :------------- | :------------- |
+| Backtracking search  | Searches a tree which goes through each branch, and allows **any** cost assigned at each branch | $O(branches^depth) | $O(depth)$ |
+
