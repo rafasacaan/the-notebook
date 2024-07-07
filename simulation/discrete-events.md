@@ -275,7 +275,92 @@ with counter.request() as my_turn:
 ```
 
 
+## A full example: restaurant model
+Imagine you want to open a restaurant in a popular area of San Francisco. Deciding the number of tables and kitchen capacity is extremely important to ensure the maximum number of customers are served while minimizing initial investment and running costs. A discrete-event model can help in this investment decision by simulating the level of table occupancy, customer waiting times, and the number of customers leaving the queue due to excessive waiting times.
 
+```python
+# Functions
+def source(env, number, interval, tables):
+    """Source generates customers randomly"""
+    for i in range(number):
+        c = customer(env, f"Customer {i:02d}", tables)
+        env.process(c)
+        t = random.expovariate(1.0 / interval)
+        yield env.timeout(t)
+
+
+def customer(env, name, tables):
+    """
+    Generator that simulates table requests and customer decisions to
+    wait or leave based on waiting times.
+    """
+    global customers_served, customers_quiting_waiting
+    arrive = env.now
+
+    # Request a table
+    with tables.request() as req:
+        # Estimate the patience of the customer in minutes
+        patience = random.uniform(MIN_PATIENCE, MAX_PATIENCE)
+
+        # Wait until a table is free or the customer runs out of patience
+        results = yield req | env.timeout(patience)
+        wait = env.now - arrive
+
+    # If customer is served
+    if req in results:
+
+      print(f"{env.now:7.4f} {name} > Waited {wait:6.3f} minutes for a table!")
+      time_at_tables = random.uniform(MIN_SEATING_TIME, MAX_SEATING_TIME)
+
+      # Yield the time the table is occupied by the customer
+      yield env.timeout(time_at_tables)
+      print(f"{env.now:7.4f} {name} > Finished meal :)")
+      costumers_served += 1
+
+    # If customer leaves the restaurant
+    else:
+      print(f"{env.now:7.4f} {name} > Gave up waiting and left after waiting {wait:7.4f} minutes :(")
+      customers_quiting_waiting += 1
+
+# Run
+INTERVAL_CUSTOMERS = 10
+
+# Assign the appropriate values to the model parameters
+MIN_PATIENCE = 1
+MAX_PATIENCE = 10
+MIN_SEATING_TIME = 40
+MAX_SEATING_TIME = 90
+
+customers_served = 0
+customers_quiting_waiting = 0
+
+env = simpy.Environment()
+
+# Create the SimPy resource
+tables = simpy.Resource(env, capacity=2)
+env.process(source(env, NEW_CUSTOMERS, INTERVAL_CUSTOMERS, tables))
+
+# Run the model
+env.run(until=240)
+print(f"Total number of tables served: {customers_served:02d}")
+print(f"Total number of customers quiting waiting: {customers_quiting_waiting:02d}")
+```
+
+## Building a model: end to end
+
+- Understand the dynamic system
+  - What are the aspects that modulate its behavior?
+  - What processes/events need to be included?
+
+- Objectives of the model
+  - often used to optimize systems
+
+- What are the aspects you want to optimize?
+  - more customers
+  - faster porcessing times
+  - optimize resource allocation
+ 
+- State-variables to monitor these objectives
 
 
 
