@@ -363,6 +363,170 @@ print(f"Total number of customers quiting waiting: {customers_quiting_waiting:02
 - State-variables to monitor these objectives
 
 
+## MonteCarlo sampling for discrete-event models
+When we have a series of sequential processes, different scenarios or *trajectories* arise. A montecarlo sampling analysis can be used to explore this scenarios.
+
+Imagine we have the following manufacturing processes:
+```python
+porcesses = [{'Name': 'Unloading', 'Average_Duration': 15, 'Standard_Deviation': 4},
+ {'Name': 'Cutting', 'Average_Duration': 25, 'Standard_Deviation': 5},
+ {'Name': 'Polishing', 'Average_Duration': 10, 'Standard_Deviation': 2},
+ {'Name': 'Adding Component 1',
+  'Average_Duration': 5,
+  'Standard_Deviation': 1},
+ {'Name': 'Adding Component 2',
+  'Average_Duration': 7,
+  'Standard_Deviation': 2},
+ {'Name': 'Adding Component 3',
+  'Average_Duration': 15,
+  'Standard_Deviation': 5},
+ {'Name': 'Final assembly', 'Average_Duration': 35, 'Standard_Deviation': 10},
+ {'Name': 'Quality verification',
+  'Average_Duration': 10,
+  'Standard_Deviation': 1},
+ {'Name': 'Packaging', 'Average_Duration': 2, 'Standard_Deviation': 0.2}]
+```
+
+The Monte-Carlo sampling loop will produce a series of possible process trajectories. You can run it as follows:
+
+```python
+n_trajectories = 100
+
+# Run a Monte-Carlo for-loop for n_trajectories samples
+for t in range(n_trajectories):
+
+    for p in range(len(processes)):
+        proc_p = processes[p]
+
+        # Random gauss method to pseudo-randomly estimate process duration
+        process_duration = random.gauss(
+            proc_p["Average_Duration"],
+            proc_p["Standard_Deviation"]
+        )
+        time_record[p + 1] = time_record[p] + process_duration
+
+    df_disc = pd.DataFrame({cNam[0]: process_line_space, cNam[1]: time_record})
+    fig = sns.lineplot(data=df_disc, x=cNam[0], y=cNam[1], marker="o")  # Step_10
+    fig.set(xlim=(0, len(processes) + 1))
+    plt.plot()
+plt.grid()
+plt.show()
+```
+<img width="749" alt="image" src="https://github.com/rafasacaan/the-notebook/assets/10575866/f0b5af17-e10d-41b6-ab59-a335b29b5807">
+
+We can replicate the process using simpy:
+```python
+def manufacturing_process(env):
+    global time_record
+    for p in range(len(processes)):
+        proc_p = processes[p]
+        process_duration = random.gauss(proc_p["Average_Duration"], proc_p["Standard_Deviation"])
+
+        # Clock-in and yield the process_duration
+        yield env.timeout(process_duration)
+
+        # Save the current time in time_record
+        time_record[p + 1] = env.now
+
+def run_monte_carlo(n_trajectories):
+
+    # Run a for-loop for n_trajectories samples with dummy variable t
+    for t in range(n_trajectories):
+
+        # Create the SimPy environment, add processes and run the model
+        env = simpy.Environment()
+        env.process(manufacturing_process(env))
+        env.run()
+        
+        plot_results()
+```
+
+## Idea to structure problems
+
+Imagine we have three processes. We can model each separately, where each returns the times simulated.
+
+```python
+def all_processes(env, inputs,record_processes):
+    while True:
+
+        time_requests, time_packaging, time_shipping = manage_request(inputs), packaging(inputs), shipment_delivery(inputs)
+        yield env.timeout(time_requests)
+        yield env.timeout(time_packaging)
+        yield env.timeout(time_shipping)
+
+        record_processes['Time Manage Request'].append(time_requests)
+        record_processes['Time Packaging'].append(time_packaging)
+        record_processes['Time Shipping'].append(time_shipping)
+
+    return record_processes
+```
+
+One being, for example:
+```python
+def manage_request(inputs):
+    process_time = rd.gauss(inputs['Managing request of item'][0],
+                            inputs['Managing request of item'][1])
+    return process_time
+```
+
+And run all:
+```python
+env = simpy.Environment()
+env.process(all_processes(env, inputs, record_processes))
+
+# Run the SimPy model
+env.run(until=5*365)
+
+record_processes_list = [record_processes['Time Manage Request'],
+            			 record_processes['Time Packaging'],
+            			 record_processes['Time Shipping']]
+
+# Create a histogram with 50 bins
+plt.hist(record_processes_list, bins=50, label=['Request', 'Packaging', 'Shipments'])
+plt.legend(loc='upper right')
+plt.xlabel('Duration (days)')
+plt.ylabel('Number of occurrences')
+plt.show()
+```
+
+## Clustering
+
+We can cluster trajectories and understand better the causes that lead to each, and inform buisness decisions.
+
+<img width="1486" alt="image" src="https://github.com/rafasacaan/the-notebook/assets/10575866/146f26f4-f072-478e-9e17-e8489d0bed3c">
+
+
+<img width="1482" alt="image" src="https://github.com/rafasacaan/the-notebook/assets/10575866/05801a78-2022-4067-86c8-a60d6248bb33">
+
+<img width="1435" alt="image" src="https://github.com/rafasacaan/the-notebook/assets/10575866/295dc5f3-0791-448c-a613-7e4a04663942">
+
+```python
+def plot_results(objective_func):
+    # Score
+    fig, axes = plt.subplots(1, len(processes), sharey=True, figsize=(10, 8))
+    for p in range(len(processes)):
+        sns.scatterplot(ax=axes[p], x=process_duration_all[:, p], y=objective_func, c=objective_func, cmap="turbo_r")
+        axes[p].set_title(processes[p]["Name"], rotation = 20, horizontalalignment='left')
+        axes[p].set_xlabel("Duration [min]", rotation = -10)
+        axes[p].grid()
+    axes[0].set_ylabel("Objective function score")
+    plt.show()
+
+    # Rank
+    index_sort = np.argsort(objective_func)
+    fig, axes = plt.subplots(1, len(processes), sharey=True, figsize=(10, 8))
+    for p in range(len(processes)):
+        sns.lineplot(ax=axes[p], x=np.linspace(0, NUM_SIMULATIONS, NUM_SIMULATIONS),
+                     y=process_duration_all[index_sort, p], color="orchid")
+        axes[p].set_title(processes[p]["Name"], rotation = 20, horizontalalignment='left')
+        axes[p].set_xlabel("Score-ranked scenarios", rotation = -10)
+        axes[p].grid()
+    axes[0].set_ylabel("Duration [min]")
+    plt.show()
+```
+
+
+
 
 
 
