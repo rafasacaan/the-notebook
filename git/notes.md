@@ -54,15 +54,18 @@ check all remotes
 
 git fetch only brings remote repo content to local, then, we need to synchronize both contents
 > git fetch origin main
+
 > git merge origin main
 
 Here, we can also make:
 > git diff origin main
+
 to checkout the differences between the remote and local repos.
 
 A fast-forward type of merge indicates that the local repo was behind the remote, and the merge caught up to the remote version.
 Its often the case that the remote is *ahead* of the local repo. To simplify, we can do both operations in one with:
 > git pull origin main
+
 In that way we pulled from origin to local main branch.
 
 ## pushing a remote
